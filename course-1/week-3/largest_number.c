@@ -17,12 +17,12 @@ int main(void) {
 
 void largestConcatenate(int array[], int number) {
     int index;
-    char ab[9], ba[9];
+    char ab[15], ba[15];
     for (int i = 0; i < number - 1; i++) {
         index = i;
         for (int j = i + 1; j < number; j++) {
-            sprintf(ab, "%d%d", array[i], array[j]);
-            sprintf(ba, "%d%d", array[j], array[i]);
+            sprintf(ab, "%d%d", array[index], array[j]);
+            sprintf(ba, "%d%d", array[j], array[index]);
             if (strcmp(ab, ba) < 0) {
                 index = j;
             }
@@ -38,5 +38,6 @@ void largestConcatenate(int array[], int number) {
     for (int i = 0; i < number; i++) {
         printf("%d", array[i]);
     }
+
     printf("\n");
 }
