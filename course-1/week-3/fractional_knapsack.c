@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 double maxCost(double valuePerMass[][2], double capacity, int compounds);
+int isEmpty(double valuePerMass[][2], int compounds);
 
 int main(void) {
     int compounds; double capacity;
@@ -20,7 +21,7 @@ int main(void) {
 double maxCost(double valuePerMass[][2], double capacity, int compounds) {
     double cost = 0, maxValuePerMass = 0;
     int index = 0;
-    while (capacity > 0) {
+    while (capacity > 0 && (isEmpty(valuePerMass, compounds) == 0)) {
         maxValuePerMass = 0;
         for (int i = 0; i < compounds; i++) {
             if (valuePerMass[i][1] != -1) {
@@ -43,4 +44,14 @@ double maxCost(double valuePerMass[][2], double capacity, int compounds) {
     }
 
     return cost;
+}
+
+int isEmpty(double valuePerMass[][2], int compounds) {
+    for (int i = 0; i < compounds; i++) {
+        if (valuePerMass[i][1] != -1) {
+            return 0;
+        }
+    }
+
+    return 1;
 }

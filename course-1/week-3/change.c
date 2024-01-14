@@ -12,11 +12,11 @@ int main(void) {
 int change(int money) {
     int count = 0;
     while (money > 0) {
-        if (money - 10 > 0) {
+        if (money - 10 >= 0) {
             count++;
             money -= 10;
         }
-        else if (money - 5 > 0) {
+        else if (money - 5 >= 0) {
             count++;
             money -= 5;
         }
