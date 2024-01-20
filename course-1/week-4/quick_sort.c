@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 void print_array(int array[], int length);
 void quick_sort(int array[], int lower, int upper);
@@ -22,10 +24,12 @@ int main(void) {
 void quick_sort(int array[], int lower, int upper) {
     if (upper <= lower) return;
 
-    int pivot = array[upper];
+    srand(time(NULL));
+    int index = (rand() % (upper + 1 - lower)) + lower;
+    int pivot = array[index];
     int temp, i, j;
 
-    for (i = lower - 1, j = lower; j < upper; j++) {
+    for (i = lower - 1, j = lower; j < index; j++) {
         if (array[j] < pivot) {
             i++;
             temp = array[j];
