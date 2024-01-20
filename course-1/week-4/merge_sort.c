@@ -8,7 +8,6 @@ void merge(int array[], int left, int middle, int right);
 int main(void) {
     int number;
     scanf("%d", &number);
-    fflush(stdin);
     int array[number];
     for (int i = 0; i < number; i++)
         scanf("%d", &array[i]);
@@ -32,6 +31,7 @@ void merge_sort(int array[], int left, int right) {
         merge(array, left, middle, right);
     }
 }
+
 void merge(int array[], int left, int middle, int right) {
     int length1 = middle - left + 1, length2 = right - middle;
     int temp1[length1], temp2[length2];
