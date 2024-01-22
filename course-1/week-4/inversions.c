@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_array(int array[], int length);
 int merge_sort(int array[], int left, int right);
 int merge(int array[], int left, int middle, int right);
 
@@ -14,17 +13,10 @@ int main(void) {
     
     int inversions = 0;
     inversions = merge_sort(array, 0, number - 1);
-    print_array(array, number);
 
     printf("%d\n", inversions);
 }
 
-void print_array(int array[], int length) {
-    for (int i = 0; i < length; i++) {
-        printf("%d ", array[i]);
-    }
-    printf("\n");
-}
 
 int merge_sort(int array[], int left, int right) {
     int inversions = 0;

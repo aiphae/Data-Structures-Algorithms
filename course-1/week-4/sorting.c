@@ -12,7 +12,7 @@ int main(void) {
     for (int i = 0; i < number; i++)
         scanf("%d", &array[i]);
 
-    srand(time(NULL));
+    srand(12345);
     quick_sort(array, 0, number);
 
     print_array(array, number);
