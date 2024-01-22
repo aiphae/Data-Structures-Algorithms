@@ -29,7 +29,15 @@ int binary_search(int array[], int lower, int upper, int number) {
 
     int mid = (lower + (upper - lower) / 2);
 
-    if (array[mid] == number) return mid;
+    if (array[mid] == number) {
+        for (int i = mid; i >= lower; i--) {
+            if (array[i] == number) {
+                mid = i;
+            }
+        }
+        return mid;
+    }
+
     else if (number < array[mid]) return binary_search(array, lower, mid - 1, number);
     else return binary_search(array, mid + 1, upper, number);
 }
