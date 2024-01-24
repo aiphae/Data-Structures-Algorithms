@@ -6,7 +6,7 @@ typedef struct {
     int end;
 } segment;
 
-int compare_segments(const void *a, const void *b);
+void sort_segments(segment segments[], int segmentsNumber);
 int count_segments(segment segments[], int segmentsNumber, int point, int lower, int upper);
 int check_segment(segment segments[], int numberOfSegment, int direction, int point, int segmentsNumber);
 
@@ -22,18 +22,30 @@ int main() {
     for (int i = 0; i < pointsNumber; i++)
         scanf("%d", &points[i]);
 
-    qsort(segments, segmentsNumber, sizeof(segment), compare_segments);
+    sort_segments(segments, segmentsNumber);
 
     for (int i = 0; i < pointsNumber; i++)
         printf("%d ", count_segments(segments, segmentsNumber, points[i], 0, segmentsNumber));
     printf("\n");
 }
 
-int compare_segments(const void *a, const void *b) {
-    if (((segment *)a)->start == ((segment *)b)->start)
-        return ((segment *)a)->end - ((segment *)b)->end;
-    else
-        return ((segment *)a)->start - ((segment *)b)->start;
+void sort_segments(segment segments[], int segmentsNumber) {
+    segment temp;
+    int index;
+    for (int i = 0; i < segmentsNumber; i++) {
+        index = i;
+        for (int j = i + 1; j < segmentsNumber; j++) {
+            if (segments[j].start < segments[index].start)
+                index = i;
+            else if (segments[j].start == segments[index].start) {
+                if (segments[j].end < segments[index].end)
+                    index = j;
+            }
+        }
+        temp = segments[i];
+        segments[i] = segments[index];
+        segments[index] = temp;
+    }
 }
 
 int count_segments(segment segments[], int segmentsNumber, int point, int lower, int upper) {
