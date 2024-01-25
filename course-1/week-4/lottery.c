@@ -6,7 +6,7 @@ typedef struct {
     int end;
 } segment;
 
-void sort_segments(segment segments[], int segmentsNumber);
+int compare_segments(const void *a, const void *b);
 int count_segments(segment segments[], int segmentsNumber, int point, int lower, int upper);
 int check_segment(segment segments[], int numberOfSegment, int direction, int point, int segmentsNumber);
 
@@ -22,41 +22,28 @@ int main() {
     for (int i = 0; i < pointsNumber; i++)
         scanf("%d", &points[i]);
 
-    sort_segments(segments, segmentsNumber);
+    qsort(segments, segmentsNumber, sizeof(segment), compare_segments);
 
     for (int i = 0; i < pointsNumber; i++)
         printf("%d ", count_segments(segments, segmentsNumber, points[i], 0, segmentsNumber));
     printf("\n");
 }
 
-void sort_segments(segment segments[], int segmentsNumber) {
-    segment temp;
-    int index;
-    for (int i = 0; i < segmentsNumber; i++) {
-        index = i;
-        for (int j = i + 1; j < segmentsNumber; j++) {
-            if (segments[j].start < segments[index].start)
-                index = i;
-            else if (segments[j].start == segments[index].start) {
-                if (segments[j].end < segments[index].end)
-                    index = j;
-            }
-        }
-        temp = segments[i];
-        segments[i] = segments[index];
-        segments[index] = temp;
-    }
+int compare_segments(const void *a, const void *b) {
+    if (((segment *)a)->start == ((segment *)b)->start)
+        return ((segment *)a)->end - ((segment *)b)->end;
+    return ((segment *)a)->start - ((segment *)b)->start;
 }
 
 int count_segments(segment segments[], int segmentsNumber, int point, int lower, int upper) {
-    if (upper < lower) return 0;
+    if (upper <= lower) return 0;
 
     int counter = 0;
     int middle = lower + (upper - lower) / 2;
     if (segments[middle].start <= point && segments[middle].end >= point)
         counter += 1 + check_segment(segments, middle - 1, -1, point, segmentsNumber) + check_segment(segments, middle + 1, 1, point, segmentsNumber);
     else if (segments[middle].start > point)
-        counter += count_segments(segments, segmentsNumber, point, lower, middle - 1);
+        counter += count_segments(segments, segmentsNumber, point, lower, middle);
     else
         counter += count_segments(segments, segmentsNumber, point, middle + 1, upper);
 
@@ -66,15 +53,19 @@ int count_segments(segment segments[], int segmentsNumber, int point, int lower,
 int check_segment(segment segments[], int numberOfSegment, int direction, int point, int segmentsNumber) {
     if (numberOfSegment < 0 || numberOfSegment >= segmentsNumber) return 0;
 
-    if (segments[numberOfSegment].start <= point && segments[numberOfSegment].end >= point)
+    int count = 0;
+
+    if ((segments[numberOfSegment].start <= point && segments[numberOfSegment].end >= point) || (segments[numberOfSegment].start == segments[numberOfSegment].end)) {
+        if ((segments[numberOfSegment].start <= point && segments[numberOfSegment].end >= point)) count++;
         switch (direction) {
             case -1:
-                return 1 + check_segment(segments, numberOfSegment - 1, -1, point, segmentsNumber);
+                count += check_segment(segments, numberOfSegment - 1, -1, point, segmentsNumber);
                 break;
             case 1:
-                return 1 + check_segment(segments, numberOfSegment - 1, 1, point, segmentsNumber);
-                break;
+                count += check_segment(segments, numberOfSegment + 1, 1, point, segmentsNumber);
+                break;            
         }
-    
-    return 0;
+    }
+
+    return count;
 }
