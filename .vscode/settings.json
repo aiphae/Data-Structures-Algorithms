@@ -3,6 +3,7 @@
         "array": "c",
         "random": "c",
         "cmath": "c",
-        "complex": "c"
+        "complex": "c",
+        "iterator": "c"
     }
 }
