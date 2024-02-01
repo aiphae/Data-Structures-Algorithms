@@ -16,7 +16,7 @@ int minCoinsNumber(int amount) {
     coins[1] = 1;
     coins[2] = 2;
     coins[3] = 1;
-    coins[4] = 4;
+    coins[4] = 1;
 
     for (int i = 5; i <= amount; i++)
         coins[i] = min(coins[i - 1] + 1, coins[i - 3] + 1, coins[i - 4] + 1);
