@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "array": "c",
-        "random": "c",
-        "cmath": "c",
-        "complex": "c",
-        "iterator": "c"
-    }
-}
